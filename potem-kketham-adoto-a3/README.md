@@ -105,12 +105,12 @@ We got the following results which is quite low.
 For bc.test.tiny  <br /> <br />
 
 
-![](/part1/test_2.png)
+![](/potem-kketham-adoto-a3/part1/test_2.png)
 
 <br /> <br />
 For bc.test data
 
-![](/part1/test_1.png)
+![](/potem-kketham-adoto-a3/part1/test_1.png)
 
 In our case, simple model seems to be doing better than HMM. Surely there seems to be some problem with our approach.
 
