@@ -1,3 +1,7 @@
+# Elements of AI class exercises
+
+This repository contains sub repositories which are exercise or implementation of different algorithms for 'Elements of AI Class'. Please read the 'README' page in each folder for further detail on the algorithm and implementation details.
+
 ## potem-a0
 Code by: **Manita Pote** <br /><br />
 This repository contains implementation of search algorithm for solving maze. Please refer to the README file with the folder for futher detail.
