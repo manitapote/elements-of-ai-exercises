@@ -1,0 +1,41 @@
+B551 Assignment 1: Searching
+ 
+Part 1: The 2021 Puzzle 
+
+In this problem we have a 4*5 board with 4 rows and 5 columns, it has 20 tiles. The rows and columns can wrap around to the other side of the board and have restricted movement. From the given state we have to reach the goal state which is a board with each number arranged in a sorted order in the 4*5 board.
+States: A board in any configuration with numbers from 1 to 20 on a 4*5 board.
+Initial state: A state which has numbers from 1 to 20 on a 4 * 5 board.
+
+Successor function: This function generates the legal states after the rows or columns in the board moves in one of the four directions (left, right, down, up). The 1st and the 3rd rows can move only in the left direction and the 2nd and 4th rows can move in the right direction. Similarly the 1st, 3rd and the 5th columns can move only in the Upward direction and  2nd and 4th rows can move in the downward direction.
+
+Goal state: This is the state when the board has all the numbers from 1 to 20 arranged in a sorted manner in the 4 * 5 board.
+
+Path Cost: Each move of a row or a column in the board costs 1, the path cost is the total number of steps/moves the agent takes in the path.
+
+Strategy: 
+The strategy used here is the A* search algorithm. We compute the cost till the current state from the initial state -g(s)- and the cost from the current state to the goal state as a heuristic h(s). The total cost g(s)+h(s) is the cost function. 
+The g(s) is incremented by 1 each time we make a move on the board. The directions in which the rows or columns are moved are also stored.
+In this case we have chosen the number of misplaced tiles to be the heuristic function. Just so that the number of misplaced tiles does not overestimate the cost to the goal we have divided the count by the number of elements in the row or column depending on which is moved.
+The heuristic function is admissible because after checking for many values on the real cost and the heuristic values from a state it never overestimates. In some cases, only the number of misplaced tiles for a heuristic were overestimating the real cost hence we divided that number by the row or column count and now that does not overestimate either.
+We have used a priority queue in the form of a heap queue which helps us to sort the successors based on their heuristic and then pop the one with the least count of the number of misplaced tiles.
+
+How the Search Algorithm works :-
+The Fringe holds the cost function, the cost to the current state, the current state and the path to that state. With each move of the board we add a cost of 1 to the cost function and add the state to the visited array.
+Starting off from the initial node we find the possible successors from that board configuration. We calculate the heuristic for each of the successors and store the values in a heap queue. Then we pop the elements based on the lower cost and repeat this until we reach the goal state.
+
+Assumptions as given:
+It is a 4*5 board, with 4 Rows and 5 Columns.
+
+Problems faced:- 
+Trying to make the columns move up and down was kind of tricky and tried a few methods before landing on the one where I find the Transpose and work on it in the same way as the rows.
+Realised the misplaced count of tiles does overestimate at times and for that reason divided the count by the number of elements in the row or the column and it solved the issue.
+
+Other methods tried:
+Tried the Manhattan distance for a heuristic but it overestimated the cost for certain configurations. The main reason being, the rows and columns can wrap around and this causes the Manhattan distance to overestimate as it gives the shortest distance only if the moves are in right angles.
+
+
+
+
+
+
+

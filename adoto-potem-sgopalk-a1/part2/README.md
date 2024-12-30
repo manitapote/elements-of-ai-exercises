@@ -1,0 +1,63 @@
+# a1
+
+## Part 2
+1. Problem Statement:<br />
+Given the start and end city, find the shortest driving route/good driving direction between the start and end city based on the different cost criteria.
+<br /><br />
+cost criteria can be following: <br />
+  - segments tries to find a route with the fewest number of road segments (i.e. edges of the graph). <br />
+  - distance tries to find a route with the shortest total distance. <br />
+  - time finds the fastest route, assuming one drives the speed limit. <br />
+  - safe tries to find the safest route | the one that minimizes the probability of having an accident.<br /> <br />
+  
+We assume that the rate of accidents is 1 per million miles driven for the U.S. Interstate Highway
+System, and 2 per million miles drives for all other roads. We can identify an Interstate Highway
+because it will have an I in the name. Assume that the probability of having an accident
+on any given route is thus one-millionth times the number of Interstate miles plus two-millionth
+times the number of non-Interstate miles. <br />
+
+We are provided with the dataset of major highway segment of US. <br />
+Highway Dataset Description: <br />
+  - start city
+  - end city
+  - highway name <br />
+  - distance<br />
+  - speed limit <br />
+
+City gps dataset: Contains list of cities and their latitue, longitute coordinates <br />
+  -city name <br />
+  -latitude <br />
+  -longitude <br />
+<br />
+2. Problem Abstraction: <br /> <br />
+  i. state_space: All possible cities <br />
+  ii. start_state: start_city <br />
+  iii. goall_state: end_city <br />
+  iv. cost_choice: cost to use to find the shortest path (segments, time, safe, distance) <br />
+  v. heuristic function: calculates the cost from current city to end city <br />
+  vi. successors: all the cities you can go from and to current_city <br />
+
+3. Solution: <br />
+The proposed solution to find the good driving direction between start and end city is by implementing A* star search on graph using a priority queue. We first get all the neighbouring cities that can be visited from and to the start city. These cities will be our successors. We iterate through the neighbouring cities to visit, calculate the total cost of visiting that city and store the city name, the total cost, distance in miles, accident count, time taken and path taken from start to that city in priority queue. Here, the total cost will the sum of cost of taking path from start city to current city (given by cost function) and cost of going from current city to goal city via direct path (given by heuristic function). We maintain a visited list to keep track of visited cities so that we won't be looping over same citites. Everytime we visit a city, we keep that city name in visited list. We iteratively pop the first element of the priority queue and check whether it is goal city. If not we check whether it is in visited list. If not, we get its successors and store in queue. We repeat it until we get to goal city. <br /><br />
+
+Cost function<br/>
+In this problem, we calculate the cost based on cost criteria or cost choice. If it is segments, we get the total paths to be taken from starting city to current city. <br/>
+If choice is distance, we calculate the sum of total miles to be taken to go from start city to current city based on the distance we get from highway dataset.
+If choice is time, we calculate the sum of time taken to go from start city to current city based on distance and speed limit. <br/>
+  time = (speed limit) / distance
+<br />
+If choice is safe, we get the sum of accidents in each path. <br />
+If highway is interstate then <br />
+  accidents = length / 1000000 <br />
+else <br />
+  accidents = 2 * length / 1000000 <br/>
+  
+<br />
+
+Heuristic function: <br />
+Huristic function also depends on cost choice. <br />
+For different choice it returns different value: <br />
+  - segment: returns 1
+  - distance: we calculate the distance between current city and goal city based on latitude and longitude data using a Harvesine Formula if lattitude and longitude data is available else assign distance as 0. <br />
+  - time: we get all the neighbouring cities from current city and get least time of neighbouring city. <br />
+  - safe: we get all the neighbouring cities from current city and get least accident route of neighbouring city <br />
